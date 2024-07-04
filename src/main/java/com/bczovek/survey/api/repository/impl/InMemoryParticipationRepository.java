@@ -2,7 +2,6 @@ package com.bczovek.survey.api.repository.impl;
 
 import com.bczovek.survey.api.model.MemberDTO;
 import com.bczovek.survey.api.model.ParticipationDTO;
-import com.bczovek.survey.api.model.ParticipationStatus;
 import com.bczovek.survey.api.model.SurveyDTO;
 import com.bczovek.survey.api.repository.ParticipationRepository;
 import lombok.RequiredArgsConstructor;
