@@ -1,4 +1,4 @@
-package com.bczovek.survey.api.repository.config;
+package com.bczovek.survey.api.repository.configuration;
 
 import com.bczovek.survey.api.repository.impl.InMemoryMemberRepository;
 import com.bczovek.survey.api.repository.impl.InMemoryParticipationRepository;
