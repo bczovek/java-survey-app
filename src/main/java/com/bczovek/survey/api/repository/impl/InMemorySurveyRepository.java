@@ -19,18 +19,4 @@ public class InMemorySurveyRepository implements SurveyRepository {
     public List<Survey> getAllSurveys() {
         return new ArrayList<>(surveys.values());
     }
-
-    @Override
-    public Survey getSurveyById(Integer id) {
-        return surveys.get(id);
-    }
-
-    @Override
-    public List<Survey> getSurveysByIds(List<Integer> ids) {
-        return surveys.entrySet()
-                .stream()
-                .filter(surveyEntry -> ids.contains(surveyEntry.getKey()))
-                .map(Map.Entry::getValue)
-                .toList();
-    }
 }

@@ -21,18 +21,4 @@ public class InMemoryMemberRepository implements MemberRepository {
                 .filter(Member::isActive)
                 .toList();
     }
-
-    @Override
-    public Member getMemberById(Integer id) {
-        return members.get(id);
-    }
-
-    @Override
-    public List<Member> getMembersByIds(List<Integer> ids) {
-        return members.entrySet()
-                .stream()
-                .filter(memberEntry -> ids.contains(memberEntry.getKey()))
-                .map(Map.Entry::getValue)
-                .toList();
-    }
 }
