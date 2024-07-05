@@ -1,10 +1,13 @@
 package com.bczovek.survey.csv.parser;
 
+import com.bczovek.survey.csv.exception.InvalidCsvFileContent;
+import com.bczovek.survey.csv.exception.InvalidCsvFileReference;
 import com.bczovek.survey.csv.factory.CsvFileIteratorFactory;
 import com.bczovek.survey.csv.model.CsvParticipation;
 import com.bczovek.survey.csv.model.RawParticipation;
 import com.fasterxml.jackson.databind.MappingIterator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -17,6 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ParticipationParser {
 
+    @Value("${participation.file}")
+    private String participationCsvFile;
     private final CsvFileIteratorFactory iteratorFactory;
 
     public List<RawParticipation> parse() {
@@ -29,8 +34,10 @@ public class ParticipationParser {
                 participationList.add(participation);
             }
             return participationList;
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            throw new InvalidCsvFileReference(STR."Could not find \{participationCsvFile} CSV file in the resources", e);
+        } catch (IOException e) {
+            throw new InvalidCsvFileContent(STR."Error occured while processing \{participationCsvFile}", e);
         }
     }
 
@@ -40,6 +47,6 @@ public class ParticipationParser {
     }
 
     private URI createFileUri() throws URISyntaxException {
-        return getClass().getClassLoader().getResource("Participation.csv").toURI();
+        return getClass().getClassLoader().getResource(participationCsvFile).toURI();
     }
 }
