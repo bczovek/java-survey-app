@@ -5,6 +5,7 @@ import com.bczovek.survey.api.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,14 @@ import java.util.Map;
 public class InMemoryMemberRepository implements MemberRepository {
 
     private final Map<Integer, Member> members;
+
+
+    @Override
+    public List<Member> getAllActiveMembers() {
+        return members.values().stream()
+                .filter(Member::isActive)
+                .toList();
+    }
 
     @Override
     public Member getMemberById(Integer id) {

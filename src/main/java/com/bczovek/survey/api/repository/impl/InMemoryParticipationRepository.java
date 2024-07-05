@@ -16,14 +16,14 @@ public class InMemoryParticipationRepository implements ParticipationRepository 
     @Override
     public List<Participation> getParticipationByMember(Integer memberId) {
         return participationList.stream()
-                .filter(participation -> participation.memberId().equals(memberId))
+                .filter(participation -> participation.member().id().equals(memberId))
                 .toList();
     }
 
     @Override
     public List<Participation> getParticipationBySurvey(Integer surveyId) {
         return participationList.stream()
-                .filter(participation -> participation.surveyId().equals(surveyId))
+                .filter(participation -> participation.survey().id().equals(surveyId))
                 .toList();
     }
 }

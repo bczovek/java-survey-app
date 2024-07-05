@@ -6,6 +6,7 @@ import com.bczovek.survey.api.model.ParticipationStatus;
 import com.bczovek.survey.api.model.Survey;
 import com.bczovek.survey.csv.factory.CsvFileIteratorFactory;
 import com.bczovek.survey.csv.model.CsvParticipation;
+import com.bczovek.survey.csv.model.RawParticipation;
 import com.fasterxml.jackson.databind.MappingIterator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -23,13 +24,13 @@ public class ParticipationParser {
 
     private final CsvFileIteratorFactory iteratorFactory;
 
-    public List<Participation> parse() {
+    public List<RawParticipation> parse() {
         try (MappingIterator<CsvParticipation> iterator =
                      iteratorFactory.createFromFile(createFileUri(), CsvParticipation.class)) {
-            List<Participation> participationList = new ArrayList<>();
+            List<RawParticipation> participationList = new ArrayList<>();
             while (iterator.hasNext()) {
                 CsvParticipation csvParticipation = iterator.next();
-                Participation participation = convertToDTO(csvParticipation);
+                RawParticipation participation = convertToDTO(csvParticipation);
                 participationList.add(participation);
             }
             return participationList;
@@ -38,10 +39,9 @@ public class ParticipationParser {
         }
     }
 
-    private Participation convertToDTO(CsvParticipation participation) {
-        ParticipationStatus status = ParticipationStatus.values()[participation.status() - 1];
-        return new Participation(participation.memberId(), participation.surveyId(),
-                status, participation.lengthInMinutes());
+    private RawParticipation convertToDTO(CsvParticipation participation) {
+        return new RawParticipation(participation.memberId(), participation.surveyId(),
+                participation.status(), participation.lengthInMinutes());
     }
 
     private URI createFileUri() throws URISyntaxException {
