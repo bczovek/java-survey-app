@@ -1,6 +1,7 @@
 # Survey API
-## Start
-Start the application using `mvn spring-boot:run`
+## Start 
+Start the application using `mvn spring-boot:run`  
+**Requires Java 21**
 
 ## Base URL
 All API endpoints are prefixed with `/api`.
