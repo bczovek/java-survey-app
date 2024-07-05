@@ -5,14 +5,12 @@ import com.bczovek.survey.api.cache.SurveyStatisticsCacheEntry;
 import com.bczovek.survey.api.model.SurveyStatistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@Component
 @RequiredArgsConstructor
 public class InMemorySurveyStatisticsCache implements SurveyStatisticsCache {
 

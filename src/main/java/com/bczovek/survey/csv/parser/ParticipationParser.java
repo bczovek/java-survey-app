@@ -1,9 +1,5 @@
 package com.bczovek.survey.csv.parser;
 
-import com.bczovek.survey.api.model.Member;
-import com.bczovek.survey.api.model.Participation;
-import com.bczovek.survey.api.model.ParticipationStatus;
-import com.bczovek.survey.api.model.Survey;
 import com.bczovek.survey.csv.factory.CsvFileIteratorFactory;
 import com.bczovek.survey.csv.model.CsvParticipation;
 import com.bczovek.survey.csv.model.RawParticipation;
@@ -16,7 +12,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
