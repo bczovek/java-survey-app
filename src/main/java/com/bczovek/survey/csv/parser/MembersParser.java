@@ -1,7 +1,7 @@
 package com.bczovek.survey.csv.parser;
 
 import com.bczovek.survey.api.model.Member;
-import com.bczovek.survey.csv.util.URIUtil;
+import com.bczovek.survey.csv.factory.CsvFileFactory;
 import com.bczovek.survey.csv.exception.InvalidCsvFileContent;
 import com.bczovek.survey.csv.factory.CsvFileIteratorFactory;
 import com.bczovek.survey.csv.model.CsvMember;
@@ -23,10 +23,11 @@ public class MembersParser {
     @Value("${members.file}")
     private String memberCsvFile;
     private final CsvFileIteratorFactory iteratorFactory;
+    private final CsvFileFactory csvFileFactory;
 
     public Map<Integer, Member> parse() {
         try(MappingIterator<CsvMember> membersIterator =
-                    iteratorFactory.createFromFile(URIUtil.createFileUriFromResource(memberCsvFile), CsvMember.class)) {
+                    iteratorFactory.createFromFile(csvFileFactory.createFileFromResource(memberCsvFile), CsvMember.class)) {
             Map<Integer, Member> memberMap = new HashMap<>();
             while (membersIterator.hasNext()) {
                 Member member = convertToDTO(membersIterator.next());
@@ -34,7 +35,7 @@ public class MembersParser {
             }
             return memberMap;
         } catch (IOException e) {
-            throw new InvalidCsvFileContent(STR."Error occured while processing \{memberCsvFile}", e);
+            throw new InvalidCsvFileContent(STR."Error occured while closing \{memberCsvFile}", e);
         }
     }
 

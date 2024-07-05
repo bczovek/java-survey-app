@@ -15,13 +15,13 @@ public class CsvFileIteratorFactory {
 
     private final CsvMapper csvMapper = new CsvMapper();
 
-    public <T> MappingIterator<T> createFromFile(URI fileUri, Class<T> targetObject) {
+    public <T> MappingIterator<T> createFromFile(File file, Class<T> targetObject) {
         try {
             return csvMapper.readerFor(targetObject)
                     .with(createSchema(targetObject))
-                    .readValues(getFile(fileUri));
+                    .readValues(file);
         } catch (IOException e) {
-            throw new InvalidCsvFileContent(STR."Error occured while processing \{fileUri}", e);
+            throw new InvalidCsvFileContent(STR."Error occured while processing \{file}", e);
         }
     }
 
@@ -29,9 +29,5 @@ public class CsvFileIteratorFactory {
         return csvMapper.typedSchemaFor(targetObject)
                 .withHeader()
                 .withColumnSeparator(',');
-    }
-
-    private File getFile(URI fileUri) {
-        return new File(fileUri);
     }
 }

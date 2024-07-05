@@ -3,7 +3,7 @@ package com.bczovek.survey.csv.parser;
 import com.bczovek.survey.csv.exception.InvalidCsvFileContent;
 import com.bczovek.survey.csv.factory.CsvFileIteratorFactory;
 import com.bczovek.survey.csv.model.CsvParticipation;
-import com.bczovek.survey.csv.util.URIUtil;
+import com.bczovek.survey.csv.factory.CsvFileFactory;
 import com.fasterxml.jackson.databind.MappingIterator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,10 +20,11 @@ public class ParticipationParser {
     @Value("${participation.file}")
     private String participationCsvFile;
     private final CsvFileIteratorFactory iteratorFactory;
+    private final CsvFileFactory csvFileFactory;
 
     public List<CsvParticipation> parse() {
         try (MappingIterator<CsvParticipation> iterator =
-                     iteratorFactory.createFromFile(URIUtil.createFileUriFromResource(participationCsvFile),
+                     iteratorFactory.createFromFile(csvFileFactory.createFileFromResource(participationCsvFile),
                              CsvParticipation.class)) {
             List<CsvParticipation> participationList = new ArrayList<>();
             while (iterator.hasNext()) {
