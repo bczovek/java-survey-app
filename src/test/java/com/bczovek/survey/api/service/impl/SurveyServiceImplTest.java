@@ -2,7 +2,6 @@ package com.bczovek.survey.api.service.impl;
 
 import com.bczovek.survey.api.cache.SurveyStatisticsCache;
 import com.bczovek.survey.api.model.*;
-import com.bczovek.survey.api.repository.MemberRepository;
 import com.bczovek.survey.api.repository.ParticipationRepository;
 import com.bczovek.survey.api.repository.SurveyRepository;
 import org.junit.jupiter.api.BeforeEach;

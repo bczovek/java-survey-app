@@ -3,21 +3,21 @@ package com.bczovek.survey.api.cache.impl;
 import com.bczovek.survey.api.cache.SurveyStatisticsCache;
 import com.bczovek.survey.api.cache.SurveyStatisticsCacheEntry;
 import com.bczovek.survey.api.model.SurveyStatistics;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Component
+@AllArgsConstructor
 public class InMemorySurveyStatisticsCache implements SurveyStatisticsCache {
 
     private final Map<Integer, SurveyStatisticsCacheEntry> cache = new HashMap<>();
     @Value("${survey-stat.cache.ttl}")
-    private Long timeToLiveInMinutes;
+    private Long timeToLiveInSeconds;
 
     @Override
     public void cache(Integer surveyId, SurveyStatistics surveyStatistics) {
@@ -25,7 +25,7 @@ public class InMemorySurveyStatisticsCache implements SurveyStatisticsCache {
     }
 
     private Instant calculateExpirationTime() {
-        return Instant.now().plusSeconds(timeToLiveInMinutes * 60);
+        return Instant.now().plusSeconds(timeToLiveInSeconds);
     }
 
     @Override
@@ -38,9 +38,7 @@ public class InMemorySurveyStatisticsCache implements SurveyStatisticsCache {
     }
 
     @Scheduled(cron = "0 */10 * ? * *")
-    private void cleanupCache() {
-        cache.entrySet().stream()
-                .filter(surveyStatisticsCacheEntry -> surveyStatisticsCacheEntry.getValue().isExpired())
-                .forEach(surveyStatisticsCacheEntry -> cache.remove(surveyStatisticsCacheEntry.getKey()));
+    public void cleanupCache() {
+        cache.entrySet().removeIf(entry -> entry.getValue().isExpired());
     }
 }
