@@ -3,19 +3,21 @@ package com.bczovek.survey.api.cache.impl;
 import com.bczovek.survey.api.cache.SurveyStatisticsCache;
 import com.bczovek.survey.api.cache.SurveyStatisticsCacheEntry;
 import com.bczovek.survey.api.model.SurveyStatistics;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@Component
 public class InMemorySurveyStatisticsCache implements SurveyStatisticsCache {
 
     private final Map<Integer, SurveyStatisticsCacheEntry> cache = new HashMap<>();
-    private final Long timeToLiveInSeconds;
+    @Value("${survey-stat.cache.ttl}")
+    private Long timeToLiveInMinutes;
 
     @Override
     public void cache(Integer surveyId, SurveyStatistics surveyStatistics) {
@@ -23,7 +25,7 @@ public class InMemorySurveyStatisticsCache implements SurveyStatisticsCache {
     }
 
     private Instant calculateExpirationTime() {
-        return Instant.now().plusSeconds(timeToLiveInSeconds);
+        return Instant.now().plusSeconds(timeToLiveInMinutes * 60);
     }
 
     @Override

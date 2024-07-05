@@ -1,7 +1,6 @@
 package com.bczovek.survey.csv.factory;
 
 import com.bczovek.survey.csv.exception.InvalidCsvFileContent;
-import com.bczovek.survey.csv.exception.InvalidCsvFileReference;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
