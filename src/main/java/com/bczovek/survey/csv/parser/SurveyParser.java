@@ -5,6 +5,7 @@ import com.bczovek.survey.csv.exception.InvalidCsvFileContent;
 import com.bczovek.survey.csv.exception.InvalidCsvFileReference;
 import com.bczovek.survey.csv.factory.CsvFileIteratorFactory;
 import com.bczovek.survey.csv.model.CsvSurvey;
+import com.bczovek.survey.csv.util.URIUtil;
 import com.fasterxml.jackson.databind.MappingIterator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,22 +27,17 @@ public class SurveyParser {
 
     public Map<Integer, Survey> parse() {
         try(MappingIterator<CsvSurvey> surveysIterator =
-                    iteratorFactory.createFromFile(createFileUri(), CsvSurvey.class)) {
+                    iteratorFactory.createFromFile(URIUtil.createFileUriFromResource(surveysCsvFile),
+                            CsvSurvey.class)) {
             Map<Integer, Survey> surveyMap = new HashMap<>();
             while (surveysIterator.hasNext()) {
                 Survey survey = convertToDTO(surveysIterator.next());
                 surveyMap.put(survey.id(), survey);
             }
             return surveyMap;
-        } catch (URISyntaxException e) {
-            throw new InvalidCsvFileReference(STR."Could not find \{surveysCsvFile} CSV file in the resources", e);
         } catch (IOException e) {
             throw new InvalidCsvFileContent(STR."Error occured while processing \{surveysCsvFile}", e);
         }
-    }
-
-    private URI createFileUri() throws URISyntaxException {
-        return getClass().getClassLoader().getResource(surveysCsvFile).toURI();
     }
 
     private Survey convertToDTO(CsvSurvey csvSurvey) {
