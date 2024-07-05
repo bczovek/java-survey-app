@@ -1,4 +1,4 @@
-# Survey API Documentation
+# Survey API
 ## Start
 Start the application using `mvn spring-boot:run`
 
