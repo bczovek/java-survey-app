@@ -1,14 +1,14 @@
 package com.bczovek.survey.api.repository;
 
-import com.bczovek.survey.api.model.MemberDTO;
-import com.bczovek.survey.api.model.ParticipationDTO;
-import com.bczovek.survey.api.model.SurveyDTO;
+import com.bczovek.survey.api.model.Member;
+import com.bczovek.survey.api.model.Participation;
+import com.bczovek.survey.api.model.Survey;
 
 import java.util.List;
 
 public interface ParticipationRepository {
 
-    List<ParticipationDTO> getParticipationByMember(MemberDTO member);
-    List<ParticipationDTO> getParticipationBySurvey(SurveyDTO survey);
+    List<Participation> getParticipationByMember(Member member);
+    List<Participation> getParticipationBySurvey(Survey survey);
 
 }

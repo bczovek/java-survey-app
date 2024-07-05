@@ -1,8 +1,8 @@
 package com.bczovek.survey.api.repository.impl;
 
-import com.bczovek.survey.api.model.MemberDTO;
-import com.bczovek.survey.api.model.ParticipationDTO;
-import com.bczovek.survey.api.model.SurveyDTO;
+import com.bczovek.survey.api.model.Member;
+import com.bczovek.survey.api.model.Participation;
+import com.bczovek.survey.api.model.Survey;
 import com.bczovek.survey.api.repository.ParticipationRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -11,15 +11,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InMemoryParticipationRepository implements ParticipationRepository {
 
-    private final List<ParticipationDTO> participationList;
+    private final List<Participation> participationList;
 
     @Override
-    public List<ParticipationDTO> getParticipationByMember(MemberDTO member) {
+    public List<Participation> getParticipationByMember(Member member) {
         return participationList;
     }
 
     @Override
-    public List<ParticipationDTO> getParticipationBySurvey(SurveyDTO survey) {
+    public List<Participation> getParticipationBySurvey(Survey survey) {
         return List.of();
     }
 }
