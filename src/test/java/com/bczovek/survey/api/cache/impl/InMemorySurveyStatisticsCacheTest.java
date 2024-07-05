@@ -1,7 +1,6 @@
 package com.bczovek.survey.api.cache.impl;
 
 import com.bczovek.survey.api.model.SurveyStatistics;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
