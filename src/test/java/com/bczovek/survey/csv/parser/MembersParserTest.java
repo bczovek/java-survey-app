@@ -24,7 +24,6 @@ import static org.mockito.Mockito.*;
 
 class MembersParserTest {
 
-    private static final Logger log = LoggerFactory.getLogger(MembersParserTest.class);
     @Mock
     private CsvFileIteratorFactory mockIteratorFactory;
     @Mock
