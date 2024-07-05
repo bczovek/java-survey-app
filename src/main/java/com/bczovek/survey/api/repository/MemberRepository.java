@@ -7,5 +7,5 @@ import java.util.List;
 public interface MemberRepository {
 
     Member getMemberById(Integer id);
-    List<Member> getMembersById(List<Integer> ids);
+    List<Member> getMembersByIds(List<Integer> ids);
 }

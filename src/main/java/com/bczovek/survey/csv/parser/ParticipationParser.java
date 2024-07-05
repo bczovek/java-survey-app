@@ -23,14 +23,13 @@ public class ParticipationParser {
 
     private final CsvFileIteratorFactory iteratorFactory;
 
-    public List<Participation> parse(Map<Integer, Member> members, Map<Integer, Survey> surveys) {
+    public List<Participation> parse() {
         try (MappingIterator<CsvParticipation> iterator =
                      iteratorFactory.createFromFile(createFileUri(), CsvParticipation.class)) {
             List<Participation> participationList = new ArrayList<>();
             while (iterator.hasNext()) {
                 CsvParticipation csvParticipation = iterator.next();
-                Participation participation = convertToDTO(csvParticipation, members.get(csvParticipation.memberId()),
-                        surveys.get(csvParticipation.surveyId()));
+                Participation participation = convertToDTO(csvParticipation);
                 participationList.add(participation);
             }
             return participationList;
@@ -39,10 +38,10 @@ public class ParticipationParser {
         }
     }
 
-    private Participation convertToDTO(CsvParticipation participation, Member member,
-                                       Survey survey) {
+    private Participation convertToDTO(CsvParticipation participation) {
         ParticipationStatus status = ParticipationStatus.values()[participation.status() - 1];
-        return new Participation(member, survey, status, participation.lengthInMinutes());
+        return new Participation(participation.memberId(), participation.surveyId(),
+                status, participation.lengthInMinutes());
     }
 
     private URI createFileUri() throws URISyntaxException {

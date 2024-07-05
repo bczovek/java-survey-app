@@ -7,6 +7,7 @@ import com.bczovek.survey.api.repository.ParticipationRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class InMemoryParticipationRepository implements ParticipationRepository {
@@ -15,11 +16,15 @@ public class InMemoryParticipationRepository implements ParticipationRepository 
 
     @Override
     public List<Participation> getParticipationByMember(Member member) {
-        return participationList;
+        return participationList.stream()
+                .filter(participation -> participation.memberId().equals(member.id()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Participation> getParticipationBySurvey(Survey survey) {
-        return List.of();
+        return participationList.stream()
+                .filter(participation -> participation.surveyId().equals(survey.id()))
+                .collect(Collectors.toList());
     }
 }

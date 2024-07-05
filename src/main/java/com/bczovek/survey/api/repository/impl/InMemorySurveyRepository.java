@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class InMemorySurveyRepository implements SurveyRepository {
@@ -18,7 +19,11 @@ public class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public List<Survey> getSurveysById(List<Integer> id) {
-        return List.of();
+    public List<Survey> getSurveysByIds(List<Integer> ids) {
+        return surveys.entrySet()
+                .stream()
+                .filter(surveyEntry -> ids.contains(surveyEntry.getKey()))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 }

@@ -7,6 +7,6 @@ import java.util.List;
 public interface SurveyRepository {
 
     Survey getSurveyById(Integer id);
-    List<Survey> getSurveysById(List<Integer> ids);
+    List<Survey> getSurveysByIds(List<Integer> ids);
 
 }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class InMemoryMemberRepository implements MemberRepository {
@@ -18,7 +19,11 @@ public class InMemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public List<Member> getMembersById(List<Integer> ids) {
-        return List.of();
+    public List<Member> getMembersByIds(List<Integer> ids) {
+        return members.entrySet()
+                .stream()
+                .filter(memberEntry -> ids.contains(memberEntry.getKey()))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 }
